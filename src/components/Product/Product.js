@@ -14,8 +14,8 @@ const Product = props => {
       </div>
       <div>
         <header>
-          <h2 className={styles.name} alt={props.names}>Kodilla shirt</h2>
-          <span className={styles.price}>Price: 20$</span>
+          <h2 className={styles.name} alt={props.names}>{props.title}</h2>
+          <span className={styles.price}>{props.basePrice}$</span>
         </header>
         <form>
           <div className={styles.sizes}>
@@ -46,6 +46,7 @@ const Product = props => {
 
 Product.proptTypes = {
   name: ProptTypes.string.isRequired,
+
   
 };
 
