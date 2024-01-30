@@ -11,8 +11,8 @@ const Product = props => {
   return (
     <article className={styles.product}>
       <ProductImage  name={props.name} title={props.title} currentColor={currentColor}/>
-      <ProductForm sizes={props.sizes} colors={props.colors}
-        title={props.title} basePrice={props.basePrice} currentColor={currentColor} currentSize={currentSize}
+      <ProductForm sizes={props.sizes} colors={props.colors} title={props.title} basePrice={props.basePrice} 
+        currentColor={currentColor} currentSize={currentSize}
         setCurrentColor={setCurrentColor} setCurrentSize={setCurrentSize} />
     </article>
   )

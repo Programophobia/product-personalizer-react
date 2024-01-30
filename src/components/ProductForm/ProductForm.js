@@ -1,8 +1,8 @@
 import Button from "../Button/Button"
 import styles from './ProductForm.module.scss'
-import clsx from 'clsx';
-
-
+import OptionColor from "./OptionColor/OptionColor";
+import OptionSize from "./OptionSize/OptionSize";
+import PropTypes from 'prop-types';
 
 const ProductForm = props => {
     const getPrice = (basePrice, currentSize) => {
@@ -22,34 +22,30 @@ const ProductForm = props => {
       props.setCurrentSize(props.sizes[0]);
     };
 
-    const prepareColorClassName = color => {
-      return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()];
-    };
     return (
-<div>
+      <div>
         <header>
           <h2 className={styles.name} alt={props.names}>{props.title}</h2>
           <span className={styles.price}>Price: {getPrice(props.basePrice, props.currentSize)}$</span>
         </header>
         <form>
-          <div className={styles.sizes}>
-            <h3 className={styles.optionLabel} alt={props.names}>Size </h3>
-            <ul className={styles.choices}>
-              {props.sizes.map(size => <li key={size.name}><button onClick = {() => props.setCurrentSize(size)} type="button" className={clsx(size===props.currentSize&&styles.active)}>{size.name}</button></li>)}
-            </ul>
-          </div>
-          <div className={styles.colors}>
-            <h3 className={styles.optionLabel} alt={props.names}>Colors</h3>
-            <ul className={styles.choices}>
-            {props.colors.map(color => <li key={color}><button onClick = {() => props.etCurrentColor(color)} type="button" className={clsx(prepareColorClassName(color), color===props.currentColor&&styles.active)} /></li>)}
-            </ul>
-          </div>
-          <Button onClick={ (event) => sentOrder(event, props.title, props.basePrice, props.currentSize, props.currentColor)} className={styles.button}>
+        <OptionSize sizes={props.sizes} currentSize={props.currentSize} setCurrentSize={props.setCurrentSize}/>
+        <OptionColor  colors={props.colors} currentColor={props.currentColor} setCurrentColor={props.setCurrentColor}/>
+          <Button onClick={(event) => sentOrder(event, props.title, props.basePrice, props.currentSize, props.currentColor)} className={styles.button}>
             <span className="fa fa-shopping-cart" />
           </Button>
         </form>
       </div>)
-
- }
+}
+    ProductForm.propTypes = {
+        title: PropTypes.string.isRequired,
+        currentColor: PropTypes.string.isRequired,
+        basePrice: PropTypes.number.isRequired,
+        colors: PropTypes.array.isRequired,
+        sizes: PropTypes.array.isRequired,
+        currentSize: PropTypes.object.isRequired,
+        setCurrentSize: PropTypes.func.isRequired,
+        setCurrentColor: PropTypes.func.isRequired,
+    }
 
 export default ProductForm

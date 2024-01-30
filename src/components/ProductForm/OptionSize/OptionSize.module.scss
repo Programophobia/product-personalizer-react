@@ -1,7 +1,6 @@
 
 @use 'sass:math';
-@import '../../styles/settings.scss';
-
+@import '../../../styles/settings.scss';
 
 .name {
     margin: $base-size 0;
@@ -36,16 +35,19 @@
       text-align: center;
       cursor: pointer;
       transition: $transition;
+
+      &.active {
+        opacity: 1;
+        transform: scale(1.2);
+        background: rgb(47, 53, 66);
+      }
+
+     
+      &:first-child {
+        margin-left: 0;
+      }
     }
+}
 
-  }
 
-  .button {
-    position: absolute;
-    top: -$base-size * 2;
-    right: -$base-size * 2;
-    font-size: $base-size * 2;
-    border-radius: 100%;
-    width: $base-size * 5;
-    height: $base-size * 5;
-  }
+
