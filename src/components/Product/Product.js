@@ -6,10 +6,14 @@ import { useState } from 'react';
 
 const Product = props => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
-  const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
+  const [currentSize, setCurrentSize] = useState(props.sizes[0]);
 
   const prepareColorClassName = color => {
     return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()];
+  }
+
+  const getPrice = (basePrice, currentSize) => {
+    return basePrice + currentSize.additionalPrice;
   }
 
   return (
@@ -23,19 +27,19 @@ const Product = props => {
       <div>
         <header>
           <h2 className={styles.name} alt={props.names}>{props.title}</h2>
-          <span className={styles.price}>{props.basePrice}$</span>
+          <span className={styles.price}>Price: {getPrice(props.basePrice, currentSize)}$</span>
         </header>
         <form>
           <div className={styles.sizes}>
             <h3 className={styles.optionLabel} alt={props.names}>Size </h3>
             <ul className={styles.choices}>
-              {props.sizes.map(size => <li><button type="button" className={clsx(size.name===currentSize&&styles.active)}>{size.name}</button></li>)}
+              {props.sizes.map(size => <li><button onClick = {() => setCurrentSize(size)} type="button" className={clsx(size===currentSize&&styles.active)}>{size.name}</button></li>)}
             </ul>
           </div>
           <div className={styles.colors}>
             <h3 className={styles.optionLabel} alt={props.names}>Colors</h3>
             <ul className={styles.choices}>
-            {props.colors.map(color => <li><button type="button" className={clsx(prepareColorClassName(color), color===currentColor&&styles.active)} /></li>)}
+            {props.colors.map(color => <li><button onClick = {() => setCurrentColor(color)} type="button" className={clsx(prepareColorClassName(color), color===currentColor&&styles.active)} /></li>)}
             </ul>
           </div>
           <Button className={styles.button}>
@@ -48,9 +52,7 @@ const Product = props => {
 };
 
 Product.proptTypes = {
-  name: ProptTypes.string.isRequired,
-
-  
+  name: ProptTypes.string.isRequired, 
 };
 
 export default Product;
