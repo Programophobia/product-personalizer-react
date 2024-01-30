@@ -7,6 +7,11 @@ import { useState } from 'react';
 const Product = props => {
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
   const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
+
+  const prepareColorClassName = color => {
+    return styles['color' + color[0].toUpperCase() + color.substr(1).toLowerCase()];
+  }
+
   return (
     <article className={styles.product}>
       <div className={styles.imageContainer}>
@@ -24,18 +29,13 @@ const Product = props => {
           <div className={styles.sizes}>
             <h3 className={styles.optionLabel} alt={props.names}>Size </h3>
             <ul className={styles.choices}>
-              <li><button type="button" className={styles.active} alt={props.names}>S</button></li>
-              <li><button type="button">M</button></li>
-              <li><button type="button">L</button></li>
-              <li><button type="button">XL</button></li>
+              {props.sizes.map(size => <li><button type="button" className={clsx(size.name===currentSize&&styles.active)}>{size.name}</button></li>)}
             </ul>
           </div>
           <div className={styles.colors}>
             <h3 className={styles.optionLabel} alt={props.names}>Colors</h3>
             <ul className={styles.choices}>
-              <li><button type="button" className={clsx(styles.colorBlack, styles.active)} /></li>
-              <li><button type="button" className={clsx(styles.colorRed)} /></li>
-              <li><button type="button" className={clsx(styles.colorWhite)} /></li>
+            {props.colors.map(color => <li><button type="button" className={clsx(prepareColorClassName(color), color===currentColor&&styles.active)} /></li>)}
             </ul>
           </div>
           <Button className={styles.button}>
